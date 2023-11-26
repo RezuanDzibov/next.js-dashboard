@@ -2,6 +2,7 @@ import { invoices } from "@/app/lib/placeholder-data";
 import Breadcrumbs from "../../breadcrumbs";
 import Form from "@/app/dashboard/invoices/edit-form";
 import { fetchCustomers, fetchInvoiceById } from "@/app/lib/data";
+import { notFound } from "next/navigation";
 
 export default async function Page ({ params }: { params: { id: string } }) {
     const id = params.id;
@@ -9,6 +10,9 @@ export default async function Page ({ params }: { params: { id: string } }) {
         fetchInvoiceById(id),
         fetchCustomers(),
     ])
+    if (!invoice) {
+        notFound()
+    }
 
     return (
         <main>
